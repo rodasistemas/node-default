@@ -1,8 +1,12 @@
 import express from 'express'
+import { UserController } from '@controllers/UserController'
 
 const app = express()
 app.get('/', (request, response)=>{
-    return response.json({message: 'Teste'})
+    const user = new UserController()
+    
+    
+    return response.json({message: user.getUser()})
 
 
 })

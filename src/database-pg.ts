@@ -10,7 +10,8 @@ export class DatabasePg {
         let videos
 
         if(search){
-            videos = await sql`select * from videos where to_tsvector(videos::text) @@ websearch_to_tsquery(${'*:'+search+':*'});`
+            videos = await sql`select * from videos
+             where to_tsvector(videos::text) @@ websearch_to_tsquery(${'*:'+search+':*'});`
         }else{
             videos = await sql`select * from videos`
         }
@@ -19,7 +20,10 @@ export class DatabasePg {
     async create(video: { title: string; description: string; duration: number }){
         const {title, description, duration} = video
         const videoId = randomUUID()
-        await sql`INSERT INTO videos (id, title, description, duration) VALUES (${videoId},${title},${description},${duration}); `.then(()=>{
+        await sql`INSERT INTO videos 
+        (id, title, description, duration) 
+        VALUES (${videoId},${title},${description},${duration}); `
+        .then(()=>{
             return 'Video inserted'
         })
     }
